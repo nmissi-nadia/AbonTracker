@@ -1,22 +1,25 @@
 package entity;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Abonnement {
-    private int id;
+    private String id;
     private String nomService;
     private Double montantMensuel;
     private Date dateDebut;
     private Date dateFin;
     private String status;
-    public Abonnement() {}
+    public Abonnement() {
+        this.id = UUID.randomUUID().toString();
+    }
     //getters and setters
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
