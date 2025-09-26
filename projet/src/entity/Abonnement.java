@@ -1,77 +1,70 @@
 package entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
-public class Abonnement {
-    private String id;
-    private String nomService;
-    private Double montantMensuel;
-    private Date dateDebut;
-    private Date dateFin;
-    private String status;
-    public Abonnement() {
-        this.id = UUID.randomUUID().toString();
-    }
-    //getters and setters
+public abstract class Abonnement {
+    protected String id;
+    protected String nomService;
+    protected double montantMensuel;
+    protected LocalDate dateDebut;
+    protected LocalDate dateFin; // auto
+    protected StatutAbonnement statut;
 
-    public String getId() {
-        return id;
+
+
+    public enum StatutAbonnement {
+        ACTIVE,
+        SUSPENDU,
+        RESILIE
     }
+    public Abonnement(String nomService, double montantMensuel, LocalDate dateDebut) {
+        this.id = UUID.randomUUID().toString();
+        this.nomService = nomService;
+        this.montantMensuel = montantMensuel;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateDebut.plusMonths(1);
+        this.statut = StatutAbonnement.ACTIVE;
+    }
+
+    /** Mise à jour du statut selon dateFin */
+    public void updateStatut() {
+        if (dateFin != null && dateFin.isBefore(LocalDate.now())) {
+            this.statut = StatutAbonnement.RESILIE;
+        } else {
+            this.statut = StatutAbonnement.ACTIVE;
+        }
+    }
+
+    public String getId() { return id; }
+    public String getNomService() { return nomService; }
+    public double getMontantMensuel() { return montantMensuel; }
+    public LocalDate getDateDebut() { return dateDebut; }
+    public LocalDate getDateFin() { return dateFin; }
+    public StatutAbonnement getStatut() { updateStatut(); return statut; }
+
+    public void setNomService(String nomService) { this.nomService = nomService; }
+    public void setMontantMensuel(double montantMensuel) { this.montantMensuel = montantMensuel; }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getNomService() {
-        return nomService;
-    }
-
-    public void setNomService(String nomService) {
-        this.nomService = nomService;
-    }
-
-    public Double getMontantMensuel() {
-        return montantMensuel;
-    }
-
-    public void setMontantMensuel(Double montantMensuel) {
-        this.montantMensuel = montantMensuel;
-    }
-
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatut(StatutAbonnement statut) {
+        this.statut = statut;
     }
 
     @Override
     public String toString() {
-        return "Abonnement{" +
-                "id=" + id +
-                ", nomService='" + nomService + '\'' +
-                ", montantMensuel=" + montantMensuel +
-                ", dateDebut=" + dateDebut +
-                ", dateFin=" + dateFin +
-                ", status='" + status + '\'' +
-                '}';
+        return String.format("Abonnement{id=%s, service=%s, montant=%.2f, debut=%s, fin=%s, statut=%s}",
+                id, nomService, montantMensuel, dateDebut, dateFin, getStatut());
     }
 }

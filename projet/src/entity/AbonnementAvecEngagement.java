@@ -1,24 +1,23 @@
 package entity;
 
-public class AbonnementAvecEngagement extends Abonnement{
-    private int dureeEngagement_mois;
 
-    public AbonnementAvecEngagement(int dureeEngagement_mois) {
-        this.dureeEngagement_mois = dureeEngagement_mois;
+import java.time.LocalDate;
+
+public class AbonnementAvecEngagement extends Abonnement {
+    private int dureeEngagementMois;
+
+    public AbonnementAvecEngagement(String nomService, double montantMensuel,
+                                    LocalDate dateDebut, int dureeEngagementMois) {
+        super(nomService, montantMensuel, dateDebut);
+        this.dureeEngagementMois = dureeEngagementMois;
+        this.setDateFin(this.getDateDebut().plusMonths(dureeEngagementMois));
+        updateStatut();
     }
 
-    public int getDureeEngagement_mois() {
-        return dureeEngagement_mois;
-    }
-
-    public void setDureeEngagement_mois(int dureeEngagement_mois) {
-        this.dureeEngagement_mois = dureeEngagement_mois;
-    }
+    public int getDureeEngagementMois() { return dureeEngagementMois; }
 
     @Override
     public String toString() {
-        return "AbonnementAvecEngagement{" +
-                "dureeEngagement_mois=" + dureeEngagement_mois +
-                '}';
+        return super.toString() + " (Avec engagement: " + dureeEngagementMois + " mois)";
     }
 }
