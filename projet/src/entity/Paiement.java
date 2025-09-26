@@ -28,7 +28,7 @@ public class Paiement {
     public Paiement(String idPaiement, String idAbonnement,
                     LocalDate dateEcheance, LocalDate datePaiement,
                     String typePaiement, StatutPaiement statut) {
-        this.idPaiement = idPaiement;  // pas de génération ici
+        this.idPaiement = idPaiement;
         this.idAbonnement = idAbonnement;
         this.dateEcheance = dateEcheance;
         this.datePaiement = datePaiement;
@@ -38,7 +38,7 @@ public class Paiement {
     public void setIdPaiement(String idPaiement) {
         this.idPaiement = idPaiement;
     }
-    /** mise à jour automatique du statut */
+
     public void updateStatut() {
         if (datePaiement != null) {
             this.statut = StatutPaiement.PAYE;

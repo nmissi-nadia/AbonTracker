@@ -1,8 +1,7 @@
 package metier;
 
 import dao.PaiementDAO;
-import entity.Abonnement;
-import entity.Paiement;
+import entity.*;
 import metier.AbonnementService;
 
 import java.sql.SQLException;
@@ -73,4 +72,5 @@ public class PaiementService {
     public List<Paiement> cinqDerniersPaiements() {
         return dao.findLastFivePayments();
     }
+
 }

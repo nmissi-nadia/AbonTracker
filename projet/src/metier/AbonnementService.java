@@ -23,6 +23,12 @@ public class AbonnementService {
         } else {
             abonnement.setDateFin(null); // Sans engagement = pas de date fin
         }
+        try {
+            genererEcheance(abonnement);
+        } catch (SQLException e) {
+            // log ou rethrow selon ton choix
+            throw e;
+        }
 
         // Enregistrement en base
         abonnementDAO.create(abonnement);
@@ -38,7 +44,7 @@ public class AbonnementService {
         return abonnementDAO.findById(Id);
     }
 
-    // Résiliation
+        // Résiliation
     public void resilierAbonnement(String id) throws SQLException {
         Abonnement abo = abonnementDAO.findById(id);
         if (abo != null) {

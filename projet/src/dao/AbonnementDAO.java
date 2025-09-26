@@ -81,7 +81,7 @@ public class AbonnementDAO {
 
     // UPDATE
     public void update(Abonnement abonnement) throws SQLException {
-        String sql = "UPDATE abonnement SET nom_service=?, montant_mensuel=?, date_debut=?, date_din=?, status=?, duree_engagement_mois=? WHERE id=?";
+        String sql = "UPDATE abonnement SET nom_service=?, montant_mensuel=?, date_debut=?, date_fin=?, status=?, duree_engagement_mois=? WHERE id=?";
         try (Connection conn = Database.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
